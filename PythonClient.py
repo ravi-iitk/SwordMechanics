@@ -10,6 +10,10 @@ def send_data(data,host = "127.0.0.1", port=25001):
     except Exception as e:
         print(f"Error: {e}")
 
+def get_angle(a, b): #function to calculate angle between two points
+    angle = np.degrees(np.arctan2((b.y - a.y), b.x - a.x))
+    return angle
+
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
@@ -17,7 +21,7 @@ cap = cv2.VideoCapture(0)
 
 hands = mp_hands.Hands(
     static_image_mode=False,
-    max_num_hands=1,
+    max_num_hands=2, # Change to 2 if you want to detect two hands
     min_detection_confidence = 0.5,
     min_tracking_confidence=0.5
 )
@@ -44,12 +48,20 @@ while cap.isOpened():
 
             handposx = (index_mcp.x + pinky_mcp.x) / 2
             handposy = (index_mcp.y + pinky_mcp.y) / 2
+            angle = get_angle(index_mcp, pinky_mcp) #angle between index and pinky finger
 
-            data_list.extend([handedness_label, handposx, handposy])
-        
+            data_list.extend([handedness_label, handposx, handposy, angle]) #data_list contains the hand data
+
+        if(len(data_list) < 8):                #if only one hand is detected
+            if data_list[0] == "Left":
+                data_list.extend(["Right", 0, 0, 0])
+            else:
+                data_list.extend(["Left", 0, 0, 0])
+
         data = " ".join(map(str,data_list))
-        print(data)      
+        print(data)
         send_data(data)
+
     cv2.imshow("Hand Tracking", frame)
     if cv2.waitKey(5) & 0xFF == ord('q'):
         break
