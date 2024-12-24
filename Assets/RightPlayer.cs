@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerContrller : MonoBehaviour
+public class RightPlayer : MonoBehaviour
 {
     public Listener listener;
     public Transform cube;
 
-    public float[] handpos = new float[2];
+    public float[] handpos2 = new float[3];
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        handpos = listener.handData;
-        cube.position = new Vector3(10.0f*handpos[0], -10.0f*handpos[1], 0);
+
+        handpos2 = listener.RightHandData;
+        cube.position = new Vector3(10.0f * handpos2[0], -10.0f * handpos2[1], 0);
+        cube.rotation=Quaternion.Euler(0, 0, handpos2[2]);
     }
 }
