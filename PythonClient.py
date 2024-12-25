@@ -11,7 +11,7 @@ def send_data(data,host = "127.0.0.1", port=25001):
         print(f"Error: {e}")
 
 def get_angle(a, b): #function to calculate angle between two points
-    angle = np.degrees(np.arctan2((b.y - a.y), b.x - a.x))
+    angle = np.degrees(np.arctan2((-b.y + a.y), b.x - a.x))
     return angle
 
 mp_hands = mp.solutions.hands

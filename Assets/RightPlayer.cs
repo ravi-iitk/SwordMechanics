@@ -14,7 +14,10 @@ public class RightPlayer : MonoBehaviour
 
         handpos1 = listener.RightHandData;
         UnityEngine.Debug.Log("Right Hand Data in Player: " + string.Join(", ", handpos1));
-        cube.position = new Vector3(10.0f * handpos1[0], -10.0f * handpos1[1], 0);
-        cube.rotation = Quaternion.Euler(0, 0, handpos1[2]); // rotation around z axis
+        if(handpos1[0] == 0 && handpos1[1] == 0 && handpos1[2] == 0){
+            return;
+        }
+        cube.localPosition = new Vector3(10.0f * (handpos1[0]-0.5f), -10.0f * (handpos1[1]-0.5f), 0); //changed to localPosition
+        cube.rotation = Quaternion.Euler(0, 0, 90+handpos1[2]); // rotation around z axis
     }
 }
