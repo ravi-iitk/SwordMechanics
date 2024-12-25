@@ -30,7 +30,7 @@ public class Listener : MonoBehaviour
 
             while (isRunning)
             {
-                if (udpServer.Available > 0) 
+                if (udpServer.Available > 0)  // 
                 {
                     byte[] receivedBytes = udpServer.Receive(ref remoteEndPoint); 
                     string dataReceived = Encoding.UTF8.GetString(receivedBytes);

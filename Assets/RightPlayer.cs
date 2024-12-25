@@ -7,19 +7,17 @@ public class RightPlayer : MonoBehaviour
     public Listener listener;
     public Transform cube;
 
-    public float[] handpos2 = new float[3];
-    // Start is called before the first frame update
-    void Start()
-    {
+    public float[] handpos1 = new float[3];//changed number to 3
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
 
-        handpos2 = listener.RightHandData;
-        cube.position = new Vector3(10.0f * handpos2[0], -10.0f * handpos2[1], 0);
-        cube.rotation=Quaternion.Euler(0, 0, handpos2[2]);
+        handpos1 = listener.RightHandData;
+        UnityEngine.Debug.Log("Right Hand Data in Player: " + string.Join(", ", handpos1));
+        if(handpos1[0] == 0 && handpos1[1] == 0 && handpos1[2] == 0){
+            return;
+        }
+        cube.localPosition = new Vector3(10.0f * (handpos1[0]-0.5f), -10.0f * (handpos1[1]-0.5f), 0); //changed to localPosition
+        cube.rotation = Quaternion.Euler(0, 0, 90+handpos1[2]); // rotation around z axis
     }
 }
