@@ -13,7 +13,7 @@ public class RightPlayer : MonoBehaviour
     {
 
         handpos1 = listener.RightHandData;
-        UnityEngine.Debug.Log("Right Hand Data in Player: " + string.Join(", ", handpos1));
+        // UnityEngine.Debug.Log("Right Hand Data in Player: " + string.Join(", ", handpos1));
         if(handpos1[0] == 0 && handpos1[1] == 0 && handpos1[2] == 0){
             return;
         }
